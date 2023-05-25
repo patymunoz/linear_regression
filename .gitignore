@@ -1,0 +1,11 @@
+# Ignore ipynb checkpoints
+.ipynb_checkpoints
+
+# Ignore requirements.in
+requirements.in
+
+# Ignore data
+
+
+# Ignore git
+.git
