@@ -6,7 +6,7 @@
 
 This is an application of lineal simple and multiple regression to analize a problem. 
 
-The data used in this example is from scikit-learn library "7.13. Diabetes dataset" from Bradley Efron, Trevor  Hastie, Iain Johnstone  and Robert Tibshirani (2004) "Least Angle Regression," Annals of Statistics (with discussion), 407-499. The data is also available in the UCI machine learning repository, https://archive.ics.uci.edu/ml/datasets/diabetes.
+The data used in this example is from scikit-learn library "7.13. Diabetes dataset" Bradley Efron, Trevor Hastie, Iain Johnstone and Robert Tibshirani (2004) "Least Angle Regression," Annals of Statistics (with discussion), 407-499. (https://web.stanford.edu/~hastie/Papers/LARS/LeastAngle_2002.pdf)
 
 We will see the basics of regression. We will see the difference between simple and multiple regression, how to interpret the results, how to evaluate the model and how to use it to predict new values.
 
