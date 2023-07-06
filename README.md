@@ -4,15 +4,17 @@
 
 ## Introduction
 
-This is an application of lineal simple and multiple regression to analize a problem. 
+Welcome! This repository is dedicated to exploring linear regression - both simple and multiple. It is a tool for analyzing a particular set of problems. 
 
-The data used in this example is from scikit-learn library "7.13. Diabetes dataset" Bradley Efron, Trevor Hastie, Iain Johnstone and Robert Tibshirani (2004) "Least Angle Regression," Annals of Statistics (with discussion), 407-499. (https://web.stanford.edu/~hastie/Papers/LARS/LeastAngle_2002.pdf)
+My example data comes from the [scikit-learn library's](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html)  "7.13. Diabetes dataset". This dataset is well-documented in the paper "Least Angle Regression" by Bradley Efron, Trevor Hastie, Iain Johnstone, and Robert Tibshirani (2004) [available here.](https://web.stanford.edu/~hastie/Papers/LARS/LeastAngle_2002.pdf) 
 
-We will see the basics of regression. We will see the difference between simple and multiple regression, how to interpret the results, how to evaluate the model and how to use it to predict new values.
+I'll be using two Python libraries for our analysis - scikit-learn for implementing the regression, and [statsmodels library](https://www.statsmodels.org/stable/regression.html) for a detailed statistical analysis of the results.
 
-In addition, we will see how to use the [scikit-learn library](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html) to perform the regression and how to use the [statsmodels library](https://www.statsmodels.org/stable/regression.html) to perform the regression. Even more, we can see that statsmodels OLS provides more information for statistical inference and probabilistic interpretation of its results.
+Really hope that this exploration will be useful to understand the basics of linear regression and how to implement it in Python.
 
 ## Dependencies
+
+To replicate the analysis, you'll need the following libraries:
 
 * [pandas](https://pandas.pydata.org/)
 * [numpy](https://numpy.org/)
@@ -23,33 +25,34 @@ In addition, we will see how to use the [scikit-learn library](https://scikit-le
 * [statsmodels](https://www.statsmodels.org/stable/index.html)
 * [scikit-learn](https://scikit-learn.org/stable/index.html)
 
-## How to run the code
+## Running the code
 
-It is recommended to run the code in a virtual environment.
+It's recommended to run the code in a virtual environment. Follow these steps:
 
-1. To create a virtual environment, I recommend:
+Set up a virtual environment and install necessary libraries with:
 
 ```
-python install -r requirements.txt
+pip install -r requirements.txt
 ```
 
-But you can install the libraries manually if you want. Only be sure to install the libraries in the same version as the ones in the requirements.txt file and use **python 3.9**.
+or first install pip-tools and create a virtual environment with:
 
-2. Run the code
+```
+pip-sync
+```
 
-There are *n* notebooks that you can run:
+Make sure you're using Python 3.9 and the library versions specified in the requirements.txt file.
+
+Run the Jupyter notebooks available in this repository.
 
 
+## 1. Understanding linear regression
 
-
-
-
-
-## 1. Introduction to Regression
+### 1.1. What is linear regression?
 
 *Linear regression* is an approach for predicting a quantitative response $Y$ on the basis of a single predictor variable $X$. 
 
-Some important point to consider in this approach are: 
+Some important points to consider in this approach are: 
 
 * that it assumes that there is a relationship between $X$ and $Y$.
 * that it assumes that this relationship is linear.
@@ -57,7 +60,7 @@ Some important point to consider in this approach are:
 Mathematically, we can write this linear relationship as
 
 $$
-\begin{equation} Y \approx \beta_0 + \beta_1 X + \varepsilon \end{equation}
+\begin{equation} Y \approx \beta_0 + \beta_1 X \end{equation}
 $$
 
 where $\beta_0$ and $\beta_1$ are two unknown constants that represent the *intercept* and *slope* terms in the linear model.
@@ -69,11 +72,11 @@ where $\beta_0$ and $\beta_1$ are two unknown constants that represent the *inte
 Together, $\beta_0$ and $\beta_1$ are known as the *model coefficients* or *parameters*. Usually in some literature, $\beta_0$ and $\beta_1$ are instead denoted as $\theta$. 
 
 
-## 2. For estimating coefficients / parameteres
+## 2. Estimating the coefficients
 
-In practice, $\beta_0$ and $\beta_1$ are unknown. So before we can use (1) to make predictions, we must **use data** to estimate the coefficients. 
+In practice, $\beta_0$ and $\beta_1$ are unknown and must be estimated from the data. We find these estimates by minimizing the sum of the squared residuals (differences between observed and predicted values), a method known as *ordinary least squares (OLS)*.
 
-We want to find an intercept $\beta_0$ and a slope $\beta_1$ such that the resulting line is as close as possible to the *n* data points. There are a number of ways of measuring *closeness*. Howerver, by far the most common approach involves *minimizing the least squares criterion* which is called *least squares regression* or *ordinary least squares (OLS)* regression.
+There are a number of ways of measuring *closeness*. Howerver, by far the most common approach involves *minimizing the least squares criterion* which is OLS (James, et al., 2013).
 
 Let $\hat{y_i} = \hat{\beta_0} + \hat{\beta_1} x_i$ be the prediction for $Y$ based on the $i$th value of $X$. Then $e_i = y_i - \hat{y_i}$ represents the $i$th *residual*, this is the difference between the $i$th observed response value and the $i$th response value that is predicted by our linear model. We define the *residual sum of squares (RSS)* as
 
@@ -109,39 +112,6 @@ Here's how it relates to scikit-learn:
 * **Fitting the Model:** When you call the .fit(X, y) method on a LinearRegression object, scikit-learn will use your input features (X) and target variable (y) to compute the optimal parameters (β0 and β1) that minimize the RSS, just as described in your content.
 
 * **Model Coefficients:** After fitting, the estimated coefficients can be accessed using the .coef_ and .intercept_ attributes of the LinearRegression object. These correspond to β1 (the slope) and β0 (the intercept) respectively.
-
-
-
-## 3. For modeling the error ($\varepsilon$ - noise term)
-
-Because of the presence of *observation noise*, we will adopt a **probabilistic approach** and model the noise using likelihood function. We consider a regression problem with the likelihood function:
-
-$$
-\begin{equation} p(y|x) = \mathcal{N}(y; f(x), \sigma^2) \end{equation}
-$$
-
-where $x \in R$ are inputs and $y \in R$ are noisy function values (targets).
-
-With (6), the functional relationship between $x$ and $y$ is given as
-
-$$
-\begin{equation} y = f(x) + \varepsilon \end{equation}
-$$
-
-where $\varepsilon \sim \mathcal{N}(0, \sigma^2)$ is independent, identically distributed (i.i.d.) Gaussian measuremente noise with mean 0 and variance $\sigma^2$ (Deisenroth et al,. 2020).
-
-Assumes:
-
-* that $\varepsilon$ is a mean-zero random error term that is independent of $X$. This means that $\varepsilon$ -error term, usually called *noise* - is assumed to be generated by an independent and identically distributed (i.i.d.) random variable, meaning each noise sample is independent of the others and they all come from the same distribution.
-
-## 4. Problem formulation - Linear regression model in a probabilistic framework
-
-Linear regression is given by:
-
-$$
-\begin{equation} p(y| x, \theta) = \mathcal{N}(y; x^T \theta, \sigma^2) \leftrightarrow y=x^T\theta+\varepsilon, \quad \varepsilon \sim \mathcal{N}(0, \sigma^2)\end{equation}
-$$
-
 
 
 
