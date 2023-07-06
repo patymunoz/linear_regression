@@ -1,6 +1,6 @@
 # Linear regression
 
-[![Binder]()
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/patymunoz/linear_regression/v.0.1.0)
 
 ## Introduction
 
